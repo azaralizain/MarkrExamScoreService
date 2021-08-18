@@ -39,7 +39,6 @@ class MyServer(BaseHTTPRequestHandler):
         self.end_headers()
         # sql_mean_Query = "select avg(marks_obtained) from StudentsMarks where test_id ="
 
-        # get all records
         # records = cursor.fetchall()
 
         self.wfile.write(bytes("<html><head><title>GET Method</title></head>", "utf-8"))
