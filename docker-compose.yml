@@ -23,7 +23,7 @@ services:
       - my-db:/var/lib/mysql
       - ./sql:/docker-entrypoint-initdb.d
 
-# Commenting out web because it had issues
+# Commenting out web because it had issues in building
 #  web:
 #    build: .
 #    ports:
