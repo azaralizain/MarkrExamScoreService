@@ -1,6 +1,7 @@
-# Python 3 server example
+# Markr Exam Score Service
+
 from http.server import BaseHTTPRequestHandler, HTTPServer
-import xmltodict
+
 import xml.etree.ElementTree as ET
 
 import mysql.connector
@@ -13,11 +14,11 @@ try:
                                          password='password')
     if connection.is_connected():
         db_Info = connection.get_server_info()
-        print("Connected to MySQL Server version ", db_Info)
+        print("Connected to MySQL:", db_Info)
         cursor = connection.cursor()
         cursor.execute("select database();")
         record = cursor.fetchone()
-        print("You're connected to database: ", record)
+        print("Connected to database: ", record)
 
 except Error as e:
     print("Error while connecting to MySQL", e)
@@ -26,7 +27,6 @@ add_record = ("INSERT INTO StudentsMarks "
               "(student_number, test_id, marks_obtained, marks_total) "
               "VALUES (%s, %s, %s, %s)")
 
-import time
 
 hostName = "localhost"
 serverPort = 8080
@@ -37,10 +37,15 @@ class MyServer(BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header("Content-type", "text/html")
         self.end_headers()
-        self.wfile.write(bytes("<html><head><title>https://pythonbasics.org</title></head>", "utf-8"))
+        # sql_mean_Query = "select avg(marks_obtained) from StudentsMarks where test_id ="
+
+        # get all records
+        # records = cursor.fetchall()
+
+        self.wfile.write(bytes("<html><head><title>GET Method</title></head>", "utf-8"))
         self.wfile.write(bytes("<p>Request: %s</p>" % self.path, "utf-8"))
         self.wfile.write(bytes("<body>", "utf-8"))
-        self.wfile.write(bytes("<p>This is an example web server.</p>", "utf-8"))
+        self.wfile.write(bytes("<p>in GET</p>", "utf-8"))
         self.wfile.write(bytes("</body></html>", "utf-8"))
 
     def do_POST(self):
@@ -55,7 +60,6 @@ class MyServer(BaseHTTPRequestHandler):
             print(data_record)
 
             cursor.execute(add_record, data_record)
-            emp_no = cursor.lastrowid
 
         connection.commit()
 
