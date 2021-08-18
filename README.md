@@ -9,3 +9,5 @@
 -- Error handling isn't done per se
 -- Test cases not written initially
 -- Code commenting is not done
+
+Readme file is updated.
