@@ -4,6 +4,7 @@
 - The webserver code is written in python, and the DB is a MySQL db as a docker container
 - Docker compose file works fine. It fires up the db and have marked it as a dependency in the webserver container
 - Data ingestion is done in a very basic way, but the app was able to fire up the webserver and listen to POST request with XML data
+##### Important: use port 5000 to access the webserver instead of 4567!
 
 
 ## Unfinished business:
