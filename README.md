@@ -6,12 +6,14 @@
 - Data ingestion is done in a very basic way, but the app was able to fire up the webserver and listen to POST request with XML data
 
 
-- App is unfinished:
--- Error handling isn't done per se
--- Test cases not written
--- Code commenting is not done
+## Unfinished business:
 
-Assumptions:
+- Error handling isn't done per se
+- Test cases not written
+- Code commenting is not done
+- HTTP responses aren't really structured as they should (which was a requirement)
+
+## Assumptions:
 - Path handling (either by pureposixURL handler or otherwise) is not implemented, so the application might behave abnormally if URLs are not worked nicely
 - MySQL DB's cleanup after the container is killed (even if gently) might not work, and the port might stay hooled - so kill the listener if needed to re-fire the containers
 - Not saving any irrelevant info (names etc) as there seem to be no use
