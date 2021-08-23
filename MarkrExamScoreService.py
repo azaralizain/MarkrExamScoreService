@@ -8,10 +8,11 @@ import mysql.connector
 from mysql.connector import Error
 
 try:
-    connection = mysql.connector.connect(host='localhost',
+    connection = mysql.connector.connect(host='127.0.0.1',
                                          database='db',
                                          user='user',
-                                         password='password')
+                                         password='password',
+                                         port='3306')
     if connection.is_connected():
         db_Info = connection.get_server_info()
         print("Connected to MySQL:", db_Info)
@@ -29,7 +30,7 @@ add_record = ("INSERT INTO StudentsMarks "
 
 
 hostName = "localhost"
-serverPort = 8080
+serverPort = 5000
 
 
 class MyServer(BaseHTTPRequestHandler):
