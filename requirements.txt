@@ -1,2 +1,2 @@
 mysql-connector-python
-# numpy (will be used later for percentile)
+numpy==1.21.2

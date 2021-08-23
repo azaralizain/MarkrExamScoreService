@@ -1,9 +1,9 @@
 # Markr Exam Score Service
-
+import json
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
 import xml.etree.ElementTree as ET
-
+import numpy as np
 import mysql.connector
 from mysql.connector import Error
 
@@ -36,17 +36,35 @@ serverPort = 5000
 class MyServer(BaseHTTPRequestHandler):
     def do_GET(self):
         self.send_response(200)
-        self.send_header("Content-type", "text/html")
+        self.send_header("Content-type", "application/json")
         self.end_headers()
-        # sql_mean_Query = "select avg(marks_obtained) from StudentsMarks where test_id ="
+        split_url = self.path.split('/')
+        test_id = split_url[2]
+        print("test_id:" + test_id)
+        sql_aggregate_Query = "select marks_obtained from db.StudentsMarks where test_id = '{}'".format(test_id)
+        print("sql_aggregate_Query:" + sql_aggregate_Query)
+        cursor.execute(sql_aggregate_Query)
+        rv = cursor.fetchall()
 
-        # records = cursor.fetchall()
+        result_set = {"mean": np.mean(rv[0]), "count": len(rv),
+                      "p25": np.percentile(rv[0], 25), "p50": np.percentile(rv[0], 50),
+                      "p75": np.percentile(rv[0], 75)}
 
-        self.wfile.write(bytes("<html><head><title>GET Method</title></head>", "utf-8"))
-        self.wfile.write(bytes("<p>Request: %s</p>" % self.path, "utf-8"))
-        self.wfile.write(bytes("<body>", "utf-8"))
-        self.wfile.write(bytes("<p>in GET</p>", "utf-8"))
-        self.wfile.write(bytes("</body></html>", "utf-8"))
+        # result_set = {"mean": np.mean(rv["marks_obtained"]), "count": rv.count(),
+        #               "p25": np.percentile(rv["marks_obtained"], 25), "p50": np.percentile(rv["marks_obtained"], 50),
+        #               "p75": np.percentile(rv["marks_obtained"], 75)}
+
+        json_data = json.dumps(result_set)
+
+        print("json: " + json_data)
+
+        self.wfile.write(bytes(str(json.dumps(json_data)), "utf-8"))
+
+        # self.wfile.write(bytes("<html><head><title>GET Method</title></head>", "utf-8"))
+        # self.wfile.write(bytes("<p>Request: %s</p>" % self.path, "utf-8"))
+        # self.wfile.write(bytes("<body>", "utf-8"))
+        # self.wfile.write(bytes("<p>in GET</p>", "utf-8"))
+        # self.wfile.write(bytes("</body></html>", "utf-8"))
 
     def do_POST(self):
         content = self.rfile.read(int(self.headers.get('content-length')))
