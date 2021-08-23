@@ -14,5 +14,4 @@
 Assumptions:
 - Path handling (either by pureposixURL handler or otherwise) is not implemented, so the application might behave abnormally if URLs are not worked nicely
 - MySQL DB's cleanup after the container is killed (even if gently) might not work, and the port might stay hooled - so kill the listener if needed to re-fire the containers
-
-Readme file is updated.
+- Not saving any irrelevant info (names etc) as there seem to be no use
